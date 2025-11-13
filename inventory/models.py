@@ -79,7 +79,7 @@ class TaTipoInventario(models.Model):
 class TaInventario(models.Model):
     tipoInventario = models.ForeignKey(TaTipoInventario, on_delete=models.CASCADE, db_column='tipo_inventario_id')
     producto = models.ForeignKey(TaProducto, on_delete=models.CASCADE, db_column='producto_id')
-    motivo = models.ForeignKey(TaMotivo, on_delete=models.CASCADE, db_column='motivo_id', null=True)
+    motivo = models.ForeignKey(TaMotivo, on_delete=models.CASCADE, db_column='motivo_id', null=True, blank=True)
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, db_column='usuario_id')
     fechaRegistro = models.DateTimeField(auto_now_add=True, db_column='fecha_registro')
 
