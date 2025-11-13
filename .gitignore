@@ -1,3 +1,4 @@
 SGINL/__pycache__/
 .vscode/
+*/migrations/
 db.sqlite3
