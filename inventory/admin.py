@@ -7,15 +7,21 @@ class CategoriaAdmin(admin.ModelAdmin):
     list_display = ['descripcion', 'fechaRegistro']
     list_filter = ['descripcion', 'fechaRegistro']
 
+class ProductoCategoriaInline(admin.TabularInline):
+    model = TaProductoCategoria
+    extra = 1
+
 @admin.register(TaProducto)
 class ProductoAdmin(admin.ModelAdmin):
-    list_display = ['nombre', 'descripcion', 'precio', 'fechaRegistro']
+    list_display = ['nombre', 'descripcion', 'precio', 'fechaRegistro', 'mostrar_categorias']
     list_filter = ['nombre', 'fechaRegistro']
     list_editable = ['precio']
+    inlines = [ProductoCategoriaInline]
 
-@admin.register(TaProductoCategoria)
-class ProductoCategoriaAdmin(admin.ModelAdmin):
-    list_display = ['producto', 'categoria']
+    def mostrar_categorias(self, obj):
+        return ", ".join(cat.descripcion for cat in obj.categorias.all())
+    
+    mostrar_categorias.short_description = "Categorias"
 
 @admin.register(TaMotivo)
 class MotivoAdmin(admin.ModelAdmin):

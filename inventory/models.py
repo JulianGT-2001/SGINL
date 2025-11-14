@@ -24,6 +24,7 @@ class TaProducto(models.Model):
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     fechaRegistro = models.DateTimeField(auto_now_add=True, db_column='fecha_registro')
     fechaActualizacion = models.DateTimeField(auto_now_add=True, db_column='fecha_actualizacion')
+    categorias = models.ManyToManyField('TaCategoria', through='TaProductoCategoria', related_name='productos', blank=True)
 
     class Meta:
         ordering = ['nombre']
