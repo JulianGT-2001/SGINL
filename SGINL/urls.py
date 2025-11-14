@@ -18,9 +18,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import RedirectView
 from inventory_auth import urls as authUrls
+from inventory import urls as inventoryUrls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include(authUrls)),
+    path('inventory/', include(inventoryUrls)),
     path('', RedirectView.as_view(url='/auth/', permanent=False)),
+    path('inventory/', RedirectView.as_view(url='/dashboard/', permanent=False)),
 ]

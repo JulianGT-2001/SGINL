@@ -13,6 +13,7 @@ def login_view(request):
         if user is not None:
             login(request, user)
             messages.success(request, 'Login exitoso')
+            return redirect('inventory:dashboard')
         else:
             messages.error(request, 'Usuario o contraseña incorrectos')
     return render(request, 'inventory_auth/login.html')
