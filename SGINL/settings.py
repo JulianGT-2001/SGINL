@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'inventory',
+    'auth'
 ]
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
