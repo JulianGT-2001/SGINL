@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     {% block styles %}{% endblock %}
 </head>
 <body>
@@ -21,18 +22,39 @@
             </div>
 
             {% if request.user.is_authenticated %}
-            <nav class="header-nav">
-                <ul class="nav-list">
-                    <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#productos">Productos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
-                </ul>
-            </nav>
+            <div class="header-user">
+                <span class="welcome-text">Bienvenido, {{ request.user.first_name|default:request.user.username }}</span>
+                <a href="{% url 'inventory_auth:logout' %}" class="logout-button">Cerrar sesión</a>
+            </div>
             {% endif %}
         </div>
     </header>
-    {% block content %}
-    {% endblock %}
+    {% include 'messages/messages.html' %}
+    <div class="main-content">
+        {% if request.user.is_authenticated %}
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <h3 class="sidebar-title">Módulos</h3>
+                <ul class="sidebar-menu">
+                    <li class="sidebar-item">
+                        <a href="{% url 'inventory:dashboard' %}" class="sidebar-link">Dashboard</a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link">Ingresos de Inventario</a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link">Salidas de Inventario</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        {% endif %}
+
+        <div class="content-area">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+    <script src="{% static 'js/base.js' %}"></script>
 </body>
 </html>

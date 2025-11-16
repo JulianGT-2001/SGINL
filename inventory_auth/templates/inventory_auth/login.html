@@ -11,13 +11,6 @@
         <form method="post" autocomplete="off">
             {% csrf_token %}
             <div class="login-form">
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }}" role="alert">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                {% endif %}
                 <div class="fields">
                     <label for="user-input" class="label-form">Usuario</label>
                     <input id="user-input" type="text" class="input-form" name="username" required/>
