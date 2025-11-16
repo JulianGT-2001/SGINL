@@ -5,6 +5,10 @@ from django.contrib import messages
 
 # Create your views here.
 def login_view(request):
+    # Si el usuario ya está autenticado, redirigir al dashboard
+    if request.user.is_authenticated:
+        return redirect('inventory:dashboard')
+    
     if (request.method == "POST"):
         usuario = request.POST.get("username")
         password = request.POST.get("password")
