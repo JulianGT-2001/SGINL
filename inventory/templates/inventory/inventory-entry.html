@@ -1,0 +1,80 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/inventory-entry.css' %}"/>
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"/>
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css"/>
+{% endblock %}
+{% block content %} 
+<div class="inventory-entry-content">
+    <div class="entry-header">
+        <h2>Ingresos de Inventario</h2>
+        <button class="btn-new-entry">
+            <i class="ph ph-plus"></i> Registrar Nuevo Ingreso
+        </button>
+    </div>
+
+    <div class="resume-cards">
+        <div>
+            <span>Total de ingresos Hoy</span>
+            <h4>24</h4>
+        </div>
+        <div>
+            <span>Producto más ingresado</span>
+            <h4>Laptop Dell XPS 15</h4>
+        </div>
+        <div>
+            <span>Valor total de ingresos</span>
+            <h4>$45,850.00</h4>
+        </div>
+    </div>
+
+    <div class="table-card">
+        <table id="productosTable" class="display">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Producto</th>
+                    <th>Categoría</th>
+                    <th>Usuario</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2026-04-20</td>
+                    <td>Laptop Dell XPS 15</td>
+                    <td>Electrónica</td>
+                    <td>Juan Pérez</td>
+                </tr>
+                <tr>
+                    <td>2026-04-20</td>
+                    <td>Mouse Logitech MX Master</td>
+                    <td>Accesorios</td>
+                    <td>María García</td>
+                </tr>
+                <tr>
+                    <td>2026-04-19</td>
+                    <td>Monitor LG 27"</td>
+                    <td>Electrónica</td>
+                    <td>Carlos López</td>
+                </tr>
+                <tr>
+                    <td>2026-04-19</td>
+                    <td>Teclado Mecánico RGB</td>
+                    <td>Accesorios</td>
+                    <td>Juan Pérez</td>
+                </tr>
+                <tr>
+                    <td>2026-04-18</td>
+                    <td>Webcam Logitech 4K</td>
+                    <td>Accesorios</td>
+                    <td>María García</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="{% static 'js/inventory-entry.js' %}"></script>
+{% endblock %}

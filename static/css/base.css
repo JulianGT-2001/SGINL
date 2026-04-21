@@ -168,3 +168,48 @@ body {
     padding: 20px;
     overflow-y: auto;
 }
+
+.resume-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+}
+
+.resume-cards div {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.resume-cards div span {
+    font-size: 18px;
+    font-weight: 500;
+    color: #4b5563;
+}
+
+.resume-cards div h4 {
+    font-size: 40px;
+    font-weight: 600;
+}
+
+.resume-cards div:hover {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+}
+
+.resume-cards p {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+}
