@@ -1,0 +1,159 @@
+.resume-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+}
+
+.resume-cards div {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.resume-cards div span {
+    font-size: 18px;
+    font-weight: 500;
+    color: #4b5563;
+}
+
+.resume-cards div h4 {
+    font-size: 40px;
+    font-weight: 600;
+}
+
+.resume-cards div:hover {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+}
+
+.resume-cards p {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.percentage-positive {
+    color: #10b981;
+}
+
+.percentage-positive i {
+    font-size: 18px;
+}
+
+.percentage-negative {
+    color: #ef4444;
+}
+
+.percentage-negative i {
+    font-size: 18px;
+}
+
+@media (max-width: 600px) {
+    .resume-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+.chart-cards-container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.chart-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.chart-card span {
+    font-size: 18px;
+    font-weight: 500;
+    color: #4b5563;
+}
+
+.chart-card:hover {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+}
+
+.chart-card-8col {
+    grid-column: span 8;
+}
+
+.chart-card-4col {
+    grid-column: span 4;
+}
+
+.chart-wrapper {
+    flex: 1;
+    position: relative;
+    height: 300px;
+}
+
+.chart-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 10px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.legend-label {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+@media (max-width: 1024px) {
+    .chart-card-8col {
+        grid-column: span 12;
+    }
+    
+    .chart-card-4col {
+        grid-column: span 12;
+    }
+}
+
+@media (max-width: 600px) {
+    .resume-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .chart-cards-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .chart-card-8col,
+    .chart-card-4col {
+        grid-column: span 1;
+    }
+}

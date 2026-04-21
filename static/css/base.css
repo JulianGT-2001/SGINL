@@ -12,6 +12,7 @@ html, body {
 body {
     display: flex;
     flex-direction: column;
+    background-color: #f8f9fa;
 }
 
 .main-header {

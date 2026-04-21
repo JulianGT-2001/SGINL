@@ -1,8 +1,53 @@
 {% extends 'layout/base.html' %}
 {% load static %}
 {% block title %}Dashboard{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}"/>
+{% endblock %}
 {% block content %}
-<div class="main-content">
-    <p>Dashboard</p>
+<div class="dashboard-content">
+    <h2>Resumen de Inventario</h2>
+    <div class="resume-cards">
+        <div>
+            <span>Total de productos</span>
+            <h4>1,480</h4>
+            <p class="percentage-positive">
+                <i class="ph ph-caret-up"></i> +1.5%
+            </p>
+        </div>
+        <div>
+            <span>Productos bajos en stock</span>
+            <h4>52</h4>
+            <p class="percentage-positive">
+                <i class="ph ph-caret-up"></i> +3%
+            </p>
+        </div>
+        <div>
+            <span>Pedidos pendientes</span>
+            <h4>15</h4>
+            <p class="percentage-negative">
+                <i class="ph ph-caret-down"></i> -2%
+            </p>
+        </div>
+    </div>
+
+    <div class="chart-cards-container">
+        <div class="chart-card chart-card-8col">
+            <span>Productos más vendidos</span>
+            <div class="chart-wrapper">
+                <canvas id="topProductsChart"></canvas>
+            </div>
+        </div>
+        <div class="chart-card chart-card-4col">
+            <span>Distribución por categoría</span>
+            <div class="chart-wrapper">
+                <canvas id="categoriesChart"></canvas>
+            </div>
+            <div class="chart-legend" id="categoriesLegend"></div>
+        </div>
+    </div>
 </div>
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/dashboard.js' %}"></script>
 {% endblock %}
