@@ -16,15 +16,11 @@
     <div class="resume-cards">
         <div>
             <span>Total de ingresos Hoy</span>
-            <h4>24</h4>
+            <h4>{{ total_inventarios }}</h4>
         </div>
         <div>
             <span>Producto más ingresado</span>
-            <h4>Laptop Dell XPS 15</h4>
-        </div>
-        <div>
-            <span>Valor total de ingresos</span>
-            <h4>$45,850.00</h4>
+            <h4>{{ producto_top.nombre }}</h4>
         </div>
     </div>
 
@@ -34,41 +30,17 @@
                 <tr>
                     <th>Fecha</th>
                     <th>Producto</th>
-                    <th>Categoría</th>
                     <th>Usuario</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>2026-04-20</td>
-                    <td>Laptop Dell XPS 15</td>
-                    <td>Electrónica</td>
-                    <td>Juan Pérez</td>
-                </tr>
-                <tr>
-                    <td>2026-04-20</td>
-                    <td>Mouse Logitech MX Master</td>
-                    <td>Accesorios</td>
-                    <td>María García</td>
-                </tr>
-                <tr>
-                    <td>2026-04-19</td>
-                    <td>Monitor LG 27"</td>
-                    <td>Electrónica</td>
-                    <td>Carlos López</td>
-                </tr>
-                <tr>
-                    <td>2026-04-19</td>
-                    <td>Teclado Mecánico RGB</td>
-                    <td>Accesorios</td>
-                    <td>Juan Pérez</td>
-                </tr>
-                <tr>
-                    <td>2026-04-18</td>
-                    <td>Webcam Logitech 4K</td>
-                    <td>Accesorios</td>
-                    <td>María García</td>
-                </tr>
+                {% for inventory in inventarios %}
+                    <tr>
+                        <td>{{ inventory.fechaRegistro }}</td>
+                        <td>{{ inventory.producto.nombre }}</td>
+                        <td>{{ inventory.usuario.username }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

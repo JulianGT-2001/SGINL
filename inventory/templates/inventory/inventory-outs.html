@@ -22,10 +22,6 @@
             <span>Producto estrella</span>
             <h4>Laptop Dell XPS 15</h4>
         </div>
-        <div>
-            <span>Por ventas</span>
-            <h4>$45,850.00</h4>
-        </div>
     </div>
 
     <div class="table-card">
@@ -38,31 +34,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>2026-04-20</td>
-                    <td>Laptop Dell XPS 15</td>
-                    <td>Venta</td>
-                </tr>
-                <tr>
-                    <td>2026-04-20</td>
-                    <td>Mouse Logitech MX Master</td>
-                    <td>Venta</td>
-                </tr>
-                <tr>
-                    <td>2026-04-19</td>
-                    <td>Monitor LG 27"</td>
-                    <td>Venta</td>
-                </tr>
-                <tr>
-                    <td>2026-04-19</td>
-                    <td>Teclado Mecánico RGB</td>
-                    <td>Venta</td>
-                </tr>
-                <tr>
-                    <td>2026-04-18</td>
-                    <td>Webcam Logitech 4K</td>
-                    <td>Venta</td>
-                </tr>
+                {% for inventory in inventarios %}
+                    <tr>
+                        <td>{{ inventory.fechaRegistro }}</td>
+                        <td>{{ inventory.producto.nombre }}</td>
+                        <td>{{ inventory.motivo.descripcion }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
