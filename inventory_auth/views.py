@@ -5,8 +5,11 @@ from django.contrib import messages
 
 # Create your views here.
 def login_view(request):
-    # Si el usuario ya está autenticado, redirigir al dashboard
+    # Si el usuario ya está autenticado, redirigir
     if request.user.is_authenticated:
+        next_url = request.GET.get('next')
+        if next_url:
+            return redirect(next_url)
         return redirect('inventory:dashboard')
     
     if (request.method == "POST"):
@@ -18,10 +21,15 @@ def login_view(request):
         if user is not None:
             login(request, user)
             messages.success(request, 'Login exitoso')
+            next_url = request.GET.get('next')
+            if next_url:
+                return redirect(next_url)
             return redirect('inventory:dashboard')
         else:
             messages.error(request, 'Usuario o contraseña incorrectos')
-    return render(request, 'inventory_auth/login.html')
+    
+    next_url = request.GET.get('next', '')
+    return render(request, 'inventory_auth/login.html', {'next': next_url})
 
 @login_required(login_url='inventory_auth:login')
 def logout_view(request):
