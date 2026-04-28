@@ -11,7 +11,12 @@ def dashboard_view(request):
 
 @login_required(login_url='inventory_auth:login')
 def inventory_entry_view(request):
-    inventarios = TaInventario.objects.all().filter(tipoInventario=1)
+    inventarios = TaInventario.objects.filter(tipoInventario=1).values(
+        'producto__id',
+        'producto__nombre'
+    ).annotate(
+        total_registros=Count('id')
+    ).order_by('-total_registros')
     total_inventarios = TaInventario.objects.filter(
         tipoInventario=1,
         fechaRegistro__date=date.today()

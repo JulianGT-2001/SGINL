@@ -28,17 +28,15 @@
         <table id="productosTable" class="display">
             <thead>
                 <tr>
-                    <th>Fecha</th>
                     <th>Producto</th>
-                    <th>Usuario</th>
+                    <th>Cantidad</th>
                 </tr>
             </thead>
             <tbody>
                 {% for inventory in inventarios %}
                     <tr>
-                        <td>{{ inventory.fechaRegistro }}</td>
-                        <td>{{ inventory.producto.nombre }}</td>
-                        <td>{{ inventory.usuario.username }}</td>
+                        <td>{{ inventory.producto__nombre }}</td>
+                        <td>{{ inventory.total_registros }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
