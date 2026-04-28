@@ -1,31 +1,41 @@
-// Gráfica de barras - Productos más vendidos
-const topProductsCtx = document.getElementById('topProductsChart').getContext('2d');
-new Chart(topProductsCtx, {
-    type: 'bar',
-    data: {
-        labels: ['Producto A', 'Producto B', 'Producto C', 'Producto D', 'Producto E'],
-        datasets: [{
-            label: 'Ventas',
-            data: [120, 95, 150, 110, 130],
-            backgroundColor: '#4f46e5',
-            borderRadius: 5
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        plugins: {
-            legend: {
-                display: false
+async function cargarTopProductos() {
+    try {
+        const response = await fetch('/inventory/top-productos');  // ← ajusta la URL
+        const data = await response.json();
+
+        const topProductsCtx = document.getElementById('topProductsChart').getContext('2d');
+
+        new Chart(topProductsCtx, {
+            type: 'bar',
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: 'Ventas',
+                    data: data.ventas,
+                    backgroundColor: '#4f46e5',
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
             }
-        },
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
+        });
+
+    } catch (error) {
+        console.error('Error al cargar los productos:', error);
     }
-});
+}
 
 // Gráfica de anillo - Distribución por categoría
 const categoriesCtx = document.getElementById('categoriesChart').getContext('2d');
@@ -59,4 +69,8 @@ categoriesChart.data.labels.forEach((label, index) => {
         <span class="legend-label">${label}</span>
     `;
     legendContainer.appendChild(legendItem);
+});
+
+document.addEventListener('DOMContentLoaded', async () => {
+    await cargarTopProductos();
 });

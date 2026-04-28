@@ -1,14 +1,50 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count
+from django.db.models import Count, Q
+from django.db.models.functions import Cast
 from datetime import date
 from django.contrib import messages
+from django.http import JsonResponse
 from .models import TaInventario, TaProducto, TaMotivo
 
 # Create your views here.
 @login_required(login_url='inventory_auth:login')
 def dashboard_view(request):
-    return render(request, 'inventory/dashboard.html')
+    total_productos = TaInventario.objects.filter(tipoInventario=1).count()
+    productos_stock_bajo = TaInventario.objects.filter(tipoInventario=1).values('producto').annotate(
+        total_registros=Count('id')
+    ).filter(total_registros__lt=5).count()
+    resultado = TaInventario.objects.aggregate(
+    total_ingresos=Count('id', filter=Q(tipoInventario=1)),
+    total_egresos=Count('id', filter=Q(tipoInventario=2)),
+    )
+
+    ingresos = resultado['total_ingresos']
+    egresos = resultado['total_egresos']
+
+    porcentaje = (egresos / ingresos * 100) if ingresos > 0 else 0
+    return render(request, 'inventory/dashboard.html', {
+        'total_productos': total_productos,
+        'productos_stock_bajo': productos_stock_bajo,
+        'porcentaje_total': porcentaje
+    })
+
+@login_required(login_url='inventory_auth:login')
+def top_productos_view(request):
+    top_productos = (
+        TaInventario.objects
+        .filter(tipoInventario=2)
+        .values('producto__nombre')   # ← ajusta al nombre real del campo
+        .annotate(total_ventas=Count('id'))
+        .order_by('-total_ventas')[:5]
+    )
+
+    data = {
+        'labels': [p['producto__nombre'] for p in top_productos],
+        'ventas': [p['total_ventas'] for p in top_productos],
+    }
+
+    return JsonResponse(data)
 
 @login_required(login_url='inventory_auth:login')
 def inventory_entry_view(request):
