@@ -56,12 +56,13 @@
         
         <div class="modal-body">
             <form id="entryForm">
+                {% csrf_token %}
                 <div class="form-group">
                     <label for="productSelect">Producto</label>
                     <select id="productSelect" name="producto" required>
                         <option value="">-- Seleccionar Producto --</option>
                         {% for producto in productos %}
-                            <option value="{{ inventory.producto__id }}">{{ producto.nombre }}</option>
+                            <option value="{{ producto.id }}">{{ producto.nombre }}</option>
                         {% endfor %}
                     </select>
                 </div>

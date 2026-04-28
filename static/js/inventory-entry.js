@@ -80,15 +80,40 @@ $(document).ready(function() {
     });
 
     // Guardar formulario
-    saveBtn.addEventListener('click', function() {
+    saveBtn.addEventListener('click', async function() {
         if (entryForm.checkValidity()) {
             // Aquí irá la lógica para guardar los datos
-            console.log('Producto:', document.getElementById('productSelect').value);
-            console.log('Cantidad:', document.getElementById('quantityInput').value);
+            var producto = document.getElementById('productSelect').value;
+            var cantidad = document.getElementById('quantityInput').value;
+
+            var data = {
+                producto: producto,
+                cantidad: cantidad
+            }
+
+            var response = await fetch(window.location.pathname, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: new URLSearchParams({
+                    producto: producto,
+                    cantidad: cantidad
+                })
+            });
+
+            if (response.ok)
+            {
+                entryModal.classList.remove('show');
+                entryForm.reset();
+                setTimeout(() => {
+                    location.reload();
+                }, 500);
+                return;
+            }
+
+            alert("Ha ocurrido un error al guardar los ingresos")
             
-            // Cerrar modal después de guardar
-            entryModal.classList.remove('show');
-            entryForm.reset();
         } else {
             alert('Por favor completa todos los campos');
         }
