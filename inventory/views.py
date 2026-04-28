@@ -24,6 +24,7 @@ def inventory_entry_view(request):
     producto_top_stat = TaInventario.objects.filter(tipoInventario=1).values('producto').annotate(
         cantidad=Count('producto')
     ).order_by('-cantidad').first()
+    productos = TaProducto.objects.values('nombre')
     if producto_top_stat:
         producto_top = TaProducto.objects.get(id=producto_top_stat['producto'])
     else:
@@ -31,7 +32,8 @@ def inventory_entry_view(request):
     return render(request, 'inventory/inventory-entry.html', {
         'inventarios': inventarios,
         'total_inventarios': total_inventarios,
-        'producto_top': producto_top
+        'producto_top': producto_top,
+        'productos': productos
     })
 
 @login_required(login_url='inventory_auth:login')

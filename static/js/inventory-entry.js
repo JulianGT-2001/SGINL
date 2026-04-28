@@ -45,4 +45,52 @@ $(document).ready(function() {
         pageLength: 10,
         responsive: true
     });
+
+    // Modal functionality
+    const entryModal = document.getElementById('entryModal');
+    const btnNewEntry = document.querySelector('.btn-new-entry');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const entryForm = document.getElementById('entryForm');
+
+    // Abrir modal
+    btnNewEntry.addEventListener('click', function() {
+        entryModal.classList.add('show');
+    });
+
+    // Cerrar modal con botón X
+    closeModalBtn.addEventListener('click', function() {
+        entryModal.classList.remove('show');
+        entryForm.reset();
+    });
+
+    // Cerrar modal con botón Cancelar
+    cancelBtn.addEventListener('click', function() {
+        entryModal.classList.remove('show');
+        entryForm.reset();
+    });
+
+    // Cerrar modal al hacer click fuera del contenido
+    window.addEventListener('click', function(event) {
+        if (event.target === entryModal) {
+            entryModal.classList.remove('show');
+            entryForm.reset();
+        }
+    });
+
+    // Guardar formulario
+    saveBtn.addEventListener('click', function() {
+        if (entryForm.checkValidity()) {
+            // Aquí irá la lógica para guardar los datos
+            console.log('Producto:', document.getElementById('productSelect').value);
+            console.log('Cantidad:', document.getElementById('quantityInput').value);
+            
+            // Cerrar modal después de guardar
+            entryModal.classList.remove('show');
+            entryForm.reset();
+        } else {
+            alert('Por favor completa todos los campos');
+        }
+    });
 });
