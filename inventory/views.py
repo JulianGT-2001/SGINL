@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from datetime import date
 from django.contrib import messages
-from .models import TaInventario, TaProducto
+from .models import TaInventario, TaProducto, TaMotivo
 
 # Create your views here.
 @login_required(login_url='inventory_auth:login')
@@ -35,9 +35,6 @@ def inventory_entry_view(request):
         producto_id = request.POST.get("producto")
         cantidad = request.POST.get("cantidad")
 
-        print(f'el producto es: {producto_id}')
-        print(f'la cantidad es: {cantidad}')
-
         if not producto_id or not cantidad:
             messages.error(request, 'Por favor complete todos los campos')
             return redirect('inventory:inventory-entry')
@@ -60,7 +57,8 @@ def inventory_entry_view(request):
 
                 inventario.save()
 
-            messages.success(request, f'Ingresos registrados: {producto.nombre} x {cantidad}')
+            messages.success(request, f'Egresos registrados: {producto.nombre} x {cantidad}')
+            return redirect('inventory:inventory-entry')
         except TaProducto.DoesNotExist:
             messages.error(request, 'El producto no existe')
             return redirect('inventory:inventory-entry')
@@ -88,8 +86,47 @@ def inventory_outs_view(request):
         producto_top = TaProducto.objects.get(id=producto_top_stat['producto'])
     else:
         producto_top = None
+    productos = TaInventario.objects.filter(tipoInventario=1).values(
+        'producto__id',
+        'producto__nombre'
+    ).distinct()
+    motivos = TaMotivo.objects.values('id', 'descripcion')
+
+    if request.method == 'POST':
+        producto_id = request.POST.get("producto")
+        motivo_id = request.POST.get("motivo")
+
+        if not producto_id or not motivo_id:
+            messages.error(request, 'Por favor complete todos los campos')
+            return redirect('inventory:inventory-entry')
+        
+        try:
+            producto = TaProducto.objects.get(id=producto_id)
+            motivo = TaMotivo.objects.get(id=motivo_id)
+
+            inventario = TaInventario(
+                tipoInventario_id=2,
+                producto=producto,
+                usuario=request.user,
+                motivo=motivo
+            )
+
+            inventario.save()
+
+            inventario = TaInventario.objects.filter(tipoInventario=1, producto=producto).first()
+
+            if inventario:
+                inventario.delete()
+
+            messages.success(request, f'Ingresos registrados: {producto.nombre}')
+            return redirect('inventory:inventory-outs')
+        except TaProducto.DoesNotExist:
+            messages.error(request, 'El producto no existe')
+            return redirect('inventory:inventory-entry')
     return render(request, 'inventory/inventory-outs.html', {
         'inventarios': inventarios,
         'total_inventarios': total_inventarios,
-        'producto_top': producto_top
+        'producto_top': producto_top,
+        'inventarios_entrada': productos,
+        'motivos': motivos
     })

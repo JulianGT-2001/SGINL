@@ -45,4 +45,69 @@ $(document).ready(function() {
         pageLength: 10,
         responsive: true
     });
+
+    // Modal functionality
+    const outsModal = document.getElementById('outsModal');
+    const btnNewEntry = document.querySelector('.btn-new-entry');
+    const closeOutsModalBtn = document.getElementById('closeOutsModalBtn');
+    const cancelOutsBtn = document.getElementById('cancelOutsBtn');
+    const saveOutsBtn = document.getElementById('saveOutsBtn');
+    const outsForm = document.getElementById('outsForm');
+
+    // Abrir modal
+    btnNewEntry.addEventListener('click', function() {
+        outsModal.classList.add('show');
+    });
+
+    // Cerrar modal
+    closeOutsModalBtn.addEventListener('click', function() {
+        outsModal.classList.remove('show');
+        outsForm.reset();
+    });
+
+    cancelOutsBtn.addEventListener('click', function() {
+        outsModal.classList.remove('show');
+        outsForm.reset();
+    });
+
+    // Cerrar al hacer click fuera
+    window.addEventListener('click', function(event) {
+        if (event.target === outsModal) {
+            outsModal.classList.remove('show');
+            outsForm.reset();
+        }
+    });
+
+    // Guardar datos
+    saveOutsBtn.addEventListener('click', async function() {
+        if (outsForm.checkValidity()) {
+            var producto = document.getElementById('productSelectOuts').value;
+            var motivo = document.getElementById('motivoSelectOuts').value;
+
+            var response = await fetch(window.location.pathname, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: new URLSearchParams({
+                    producto: producto,
+                    motivo: motivo
+                })
+            });
+
+            if (response.ok)
+            {
+                outsModal.classList.remove('show');
+                outsForm.reset();
+                setTimeout(() => {
+                    location.reload();
+                }, 500);
+                return;
+            }
+
+            alert("Ha ocurrido un error al guardar los ingresos")
+        } else {
+            alert('Por favor completa todos los campos');
+        }
+    });
 });

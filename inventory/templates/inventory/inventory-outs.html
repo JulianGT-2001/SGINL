@@ -45,5 +45,52 @@
         </table>
     </div>
 </div>
+
+<!-- Modal para Registrar Nueva Salida -->
+<div id="outsModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Registrar Nueva Salida</h3>
+            <button class="modal-close" id="closeOutsModalBtn">
+                <i class="ph ph-x"></i>
+            </button>
+        </div>
+        
+        <div class="modal-body">
+            <form id="outsForm">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="productSelectOuts">Producto</label>
+                    <select id="productSelectOuts" name="producto" required>
+                        <option value="">-- Seleccionar Producto --</option>
+                        {% for inventario in inventarios_entrada %}
+                            <option value="{{ inventario.producto__id }}">{{ inventario.producto__nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="motivoSelectOuts">Motivo</label>
+                    <select id="motivoSelectOuts" name="motivo" required>
+                        <option value="">-- Selecciona un Motivo --</option>
+                        {% for motivo in motivos %}
+                            <option value="{{ motivo.id }}">{{ motivo.descripcion }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </form>
+        </div>
+        
+        <div class="modal-footer">
+            <button class="btn-cancel" id="cancelOutsBtn">
+                <i class="ph ph-x"></i> Cerrar
+            </button>
+            <button class="btn-save" id="saveOutsBtn">
+                <i class="ph ph-check"></i> Guardar
+            </button>
+        </div>
+    </div>
+</div>
+
 <script src="{% static 'js/inventory-outs.js' %}"></script>
 {% endblock %}

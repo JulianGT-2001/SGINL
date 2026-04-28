@@ -86,11 +86,6 @@ $(document).ready(function() {
             var producto = document.getElementById('productSelect').value;
             var cantidad = document.getElementById('quantityInput').value;
 
-            var data = {
-                producto: producto,
-                cantidad: cantidad
-            }
-
             var response = await fetch(window.location.pathname, {
                 method: 'POST',
                 headers: {
