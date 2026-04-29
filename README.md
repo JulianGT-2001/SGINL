@@ -1,4 +1,4 @@
-# Sistema de Inventarios para Negocios Locales
+# Sistema de Gestión de Inventarios para Negocios Locales
 
 ## 📌 Introducción  
 Este proyecto es el avance de mi proyecto de grado, cuyo objetivo es desarrollar un sistema de inventarios para negocios locales, construido con **Django**, un framework de desarrollo web en Python. El sistema busca automatizar y optimizar el control de stock, permitiendo a los dueños de negocios gestionar sus inventarios de manera eficiente y precisa.  
